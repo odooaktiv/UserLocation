@@ -1,7 +1,7 @@
 Uer Location App
 ------------------------------------
 
-Odoo Version : Odoo 10.0 Community for master
+Odoo Version : Odoo 9.0 Community for master
 
 
 Installation 

@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from openerp import api, fields, models
 import requests
 import json
 import socket
 import datetime
 from geopy.geocoders import Nominatim
-from odoo.http import request
+from openerp.http import request
 
 class ResUserLog(models.Model):
-    _inherit = 'res.users.log'
+    _name = 'res.users.logs'
 
     location = fields.Char()
     login_date = fields.Datetime(compute="_get_login_date", string="Login Date")
+    user_id = fields.Many2one('res.users')
 
     @api.multi
     def _get_login_date(self):
@@ -22,8 +23,11 @@ class Users(models.Model):
 
     _inherit = 'res.users'
 
+    logs_ids = fields.One2many('res.users.logs', 'user_id')
+
     @api.model
     def _update_last_login(self):
+
         vals = {}
         ip = request.httprequest.environ.get('REMOTE_ADDR')
         url = 'http://freegeoip.net/json/'+ip
@@ -33,8 +37,9 @@ class Users(models.Model):
         a = js['latitude'], js['longitude']
         location = geolocator.reverse(a)
         user = self.search([('id', '=', self.id)])
-        if user and location:
+        if location:
             vals.update({
-                'location' : location.address
-                })
-        self.env['res.users.log'].create(vals)
+                'location' : location.address,
+                'user_id' : self.env.user.id
+            })
+        self.env['res.users.logs'].create(vals)
