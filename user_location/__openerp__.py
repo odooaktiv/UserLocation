@@ -10,6 +10,8 @@
     'data': [
         'views/res_user.xml',
     ],
+
+    'images':  ['static/description/banner.jpg'],
     'installable': True,
     'auto_install': False,
 }
