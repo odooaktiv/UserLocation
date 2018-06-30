@@ -3,7 +3,7 @@
     'name': 'User Location',
     'summary': 'Here users location is fetched',
     'version': '10',
-    'author':"Aktiv Software",
+    'author': "Aktiv Software",
     'category': 'sale',
     'depends': ['base'],
     'website': 'www.aktivsoftware.com',
@@ -11,7 +11,7 @@
         'views/res_user.xml',
     ],
 
-    'images':  ['static/description/banner.jpg'],
+    'images': ['static/description/banner.jpg'],
     'installable': True,
     'auto_install': False,
 }
