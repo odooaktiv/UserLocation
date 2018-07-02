@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from openerp import api, fields, models
 import requests
-from geopy.geocoders import Nominatim
-from openerp.http import request
 
 
 class ResUserLog(models.Model):
-    _name = 'res.users.logs'
+    _inherit = 'res.users.log'
 
     location = fields.Char()
     login_date = fields.Datetime(
@@ -23,23 +21,22 @@ class Users(models.Model):
 
     _inherit = 'res.users'
 
-    logs_ids = fields.One2many('res.users.logs', 'user_id')
+    logs_ids = fields.One2many('res.users.log', 'user_id')
 
     @api.model
     def _update_last_login(self):
 
         vals = {}
-        ip = request.httprequest.environ.get('REMOTE_ADDR')
-        url = 'http://freegeoip.net/json/' + ip
+        url = 'http://ip-api.com/json/'
         r = requests.get(url)
         js = r.json()
-        geolocator = Nominatim(timeout=None)
-        a = js['latitude'], js['longitude']
-        location = geolocator.reverse(a)
-        user = self.search([('id', '=', self.id)])
-        if location:
-            vals.update({
-                'location': location.address,
-                'user_id': self.env.user.id
-            })
-        self.env['res.users.logs'].create(vals)
+        city = js['city']
+        regionname = js['regionName']
+        country = js['country']
+        address = city + ', ' + regionname + ', ' + country
+        vals.update({
+            'location': address,
+            'user_id': self.env.user.id})
+        user_log_id = self.env['res.users.log'].create(vals)
+        user = self.env.user
+        user.write({'log_ids': [(6, 0, [user_log_id.id])]})
