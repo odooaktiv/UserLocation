@@ -3,6 +3,7 @@
     'name': 'User Location',
     'summary': 'Here users location is fetched',
     'version': '10',
+    'license': "AGPL-3",
     'author': "Aktiv Software",
     'category': 'sale',
     'depends': ['base'],
