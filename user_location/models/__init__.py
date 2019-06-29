@@ -1,2 +1,1 @@
-# -*- coding: utf-8 -*-
-import res_user
+from . import res_user

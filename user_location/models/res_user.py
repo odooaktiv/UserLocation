@@ -7,8 +7,8 @@ class ResUserLog(models.Model):
     _inherit = 'res.users.log'
 
     location = fields.Char()
-    login_date = fields.Datetime(compute="_get_login_date",
-                                 string="Login Date")
+    login_date = fields.Datetime(
+        compute="_get_login_date", string="Login Date")
 
     @api.multi
     def _get_login_date(self):

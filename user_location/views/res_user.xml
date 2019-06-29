@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='access_rights']" position="after">
-                    <page name='login_history' String="Login History">
+                    <page name='login_history' string="Login History">
                         <field name="log_ids" widget="one2many_list" options="{'no_create': True}">
                             <tree editable="bottom">
                                 <field name="create_date" invisible="1"/>
