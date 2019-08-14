@@ -23,13 +23,13 @@ class Users(models.Model):
     @api.model
     def _update_last_login(self):
         vals = {}
-        url = 'http://ip-api.com/json/'
+        url = 'http://ipinfo.io/json'
         r = requests.get(url)
         js = r.json()
         city = js['city']
-        regionname = js['regionName']
+        region = js['region']
         country = js['country']
-        address = city + ', ' + regionname + ', ' + country
+        address = city + ', ' + region + ', ' + country
         vals.update({
             'location': address,
             'user_id': self.env.user.id})
