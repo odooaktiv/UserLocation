@@ -30,8 +30,10 @@ class Users(models.Model):
         js = r.json()
         city = js['city']
         region = js['region']
-        country = js['country']
-        address = city + ', ' + region + ', ' + country
+        country_code = js['country']
+        country_id = self.env['res.country'].search([('code', '=', country_code)], limit=1)
+        for country in country_id:
+            address = city + ', ' + region + ', ' + country.name
         vals.update({
             'location': address,
             'user_id': self.env.user.id})
