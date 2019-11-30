@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
 import requests
+from odoo.http import request
 
 
 class ResUserLog(models.Model):
@@ -22,16 +23,23 @@ class Users(models.Model):
 
     @api.model
     def _update_last_login(self):
+        ip_address = request.httprequest.environ['REMOTE_ADDR']
         vals = {}
-        url = 'http://ipinfo.io/json'
+        url = 'http://ipinfo.io?' + ip_address + '=$' + ip_address
         r = requests.get(url)
         js = r.json()
+        address = False
+        country_id = False
+
         city = js['city']
         region = js['region']
         country_code = js['country']
-        country_id = self.env['res.country'].search([('code', '=', country_code)], limit=1)
-        for country in country_id:
-            address = city + ', ' + region + ', ' + country.name
+        if country_code:
+            country_id = self.env['res.country'].search(
+                [('code', '=', country_code)], limit=1)
+        if country_code:
+            for country in country_id:
+                address = city + ', ' + region + ', ' + country.name
         vals.update({
             'location': address,
             'user_id': self.env.user.id})
