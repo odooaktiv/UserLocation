@@ -10,7 +10,7 @@ class ResUserLog(models.Model):
     login_date = fields.Datetime(
         compute="_get_login_date", string="Login Date")
 
-    @api.multi
+    # @api.multi
     def _get_login_date(self):
         for rec in self:
             rec.login_date = rec.create_date
@@ -34,7 +34,8 @@ class Users(models.Model):
             address = city + ', ' + region + ', ' + country.name
         vals.update({
             'location': address,
-            'user_id': self.env.user.id})
+            # 'user_id': self.env.user.id
+            })
         user_log_id = self.env['res.users.log'].create(vals)
         user = self.env.user
         user.write({'log_ids': [(6, 0, [user_log_id.id])]})
