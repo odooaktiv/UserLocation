@@ -5,7 +5,7 @@
     'version': '10',
     'license': "AGPL-3",
     'author': "Aktiv Software",
-    'category': 'sale',
+    'category': 'Extra Tools',
     'depends': ['base'],
     'website': 'www.aktivsoftware.com',
     'data': [
