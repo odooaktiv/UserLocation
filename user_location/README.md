@@ -1,14 +1,14 @@
 Uer Location App
 ------------------------------------
 
-Odoo Version : Odoo 11.0 Community Master
+Odoo Version : Odoo 14.0 Community
 
 
-Installation 
+Installation
 -------------------------------------
 Install the Application => Apps -> User Location(user_location)
 
 
 Overview
 -------------------------------------
-This module will allow to users to see them logged in info(logged in date/ location).
+This module will allow users to see them logged in info(logged in date/ location).
